@@ -2,3 +2,6 @@
 venv
 http.rest
 __pycache__
+chroma_langchain_db
+db.sqlite3
+chroma.sqlite3

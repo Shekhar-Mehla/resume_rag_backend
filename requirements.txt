@@ -3,3 +3,11 @@ django-rest-framework
 langchain
 langchain_community
 pypdf
+langchain-text-splitters
+langchain-huggingface
+langchain-groq
+sentence-transformers
+
+langchain-chroma
+chromadb
+python-dotenv
