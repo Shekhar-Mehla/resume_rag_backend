@@ -1,29 +1,29 @@
-from langchain_huggingface import HuggingFaceEmbeddings
-from langchain_groq import ChatGroq
-import os
-from dotenv import load_dotenv
-load_dotenv()
 from pathlib import Path
-path = Path(__file__).parent.parent/chroma_langchain_db
-
-
-
 from langchain_chroma import Chroma
-os.environ["HF_TOKEN"] = os.getenv("HF_TOKEN")
+from langchain_huggingface import HuggingFaceEmbeddings
 
+VECTOR_DB_DIR = Path("./chroma_langchain_db").resolve()
 
-def create_vector_db_or_load(documents):
-    print(path)
-    embeddings = HuggingFaceEmbeddings(
-    model_name="sentence-transformers/all-MiniLM-L6-v2",
-    
+embeddings = HuggingFaceEmbeddings(
+    model_name="sentence-transformers/all-MiniLM-L6-v2"
 )
 
-    vector_store = Chroma.from_documents(
-    documents,
-    embeddings,
-    persist_directory="./chroma_langchain_db")
-    return vector_store
-  
-  
+def create_vector_db_or_load(documents=None):
+    print(documents)
 
+    if VECTOR_DB_DIR.exists():
+        print("📦 Loading existing vector DB")
+
+        return Chroma(
+            persist_directory=str(VECTOR_DB_DIR),   
+            embedding_function=embeddings           
+            
+        )
+
+    print("🧠 Creating new vector DB")
+
+    return Chroma.from_documents(
+        documents=documents,
+        embedding=embeddings,
+        persist_directory=str(VECTOR_DB_DIR)
+    )
