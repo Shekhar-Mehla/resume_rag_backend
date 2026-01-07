@@ -15,6 +15,7 @@ class ResumeView(APIView):
         serializer = ResumeSerializer(data=request.data)
         if serializer.is_valid():
             user_input = serializer.validated_data.get("input")
+            print(user_input)
 
             try:
                 # Call the agent with a HumanMessage
